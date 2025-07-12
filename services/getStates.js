@@ -9,11 +9,11 @@ const getStates = (req, res) => {
   const totalDeaths = deaths + parseInt(req.body.totalDeaths);
   const totalRecovered = recovered + parseInt(req.body.totalRecovered);
 
-  db.query("SELECT * FROM cholera.stats WHERE state = ?", state, (error, result) => {
+  db.query("SELECT * FROM railway.stats WHERE state = ?", state, (error, result) => {
     if (error) return res.status(500).json({ error: error, message: "خطأ في قاعدة البيانات" });
     if (result.length === 0) return res.status(404).json({ message: "الولاية غير موجودة، لم يتم تحديث البيانات" });
     db.query(
-      "UPDATE cholera.stats SET cases = ?, recovered = ?, deaths = ?, total_cases = ?, total_death = ?, total_recovered = ? WHERE state = ?",
+      "UPDATE railway.stats SET cases = ?, recovered = ?, deaths = ?, total_cases = ?, total_death = ?, total_recovered = ? WHERE state = ?",
       [cases, recovered, deaths, totalCases, totalDeaths, totalRecovered, state],
       (error, result) => {
         if (error) return res.status(500).json({ error: error, message: "خطأ في قاعدة البيانات" });

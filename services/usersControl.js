@@ -4,7 +4,7 @@ const validator = require("validator");
 
 exports.getUsers = function (req, res) {
 
-    db.query("SELECT * FROM cholera.users", (err, result) => {
+    db.query("SELECT * FROM railway.users", (err, result) => {
 
         if (err) return res.status(500).json({error: "Something went wrong", detials: err, success: false});
 
@@ -24,7 +24,7 @@ exports.profile = function (req, res) {
 
     const id = req.params.id;
   
-    db.query("SELECT * FROM cholera.users WHERE id = ?", id, (err, result) => {
+    db.query("SELECT * FROM railway.users WHERE id = ?", id, (err, result) => {
         if (err) return res.status(500).json({error: "Error: Try again", success: false, detials: err});
         if (result.length === 0) return res.status(404).json({error: "The user is not exist", success: false});
         const user = result[0];
@@ -44,7 +44,7 @@ exports.getUser = function (req, res) {
 
     const id = req.params.id;
   
-    db.query("SELECT * FROM cholera.users WHERE id = ?", id, (err, result) => {
+    db.query("SELECT * FROM railway.users WHERE id = ?", id, (err, result) => {
         if (err) return res.status(500).json({error: "Error: Try again", success: false, detials: err});
         if (result.length === 0) return res.status(404).json({error: "The user is not exist", success: false});
         const user = result[0];
@@ -70,7 +70,7 @@ exports.addUser = function (req, res) {
 
     if (password.length < 6) return res.status(400).json({error: "The passowrd must be at least 6 characters"});
 
-    db.query("SELECT * FROM cholera.users WHERE email = ?", email, async (err, result) => {
+    db.query("SELECT * FROM railway.users WHERE email = ?", email, async (err, result) => {
 
         if (err) return res.status(500).json({error: "Error: try again", detials: err});
 
@@ -78,7 +78,7 @@ exports.addUser = function (req, res) {
 
         const hasedPassowrd = await bcrypt.hash(password, 10);
 
-        db.query("INSERT INTO cholera.users(email, password) VALUES(?, ?)", [email, hasedPassowrd], (err, result) => {
+        db.query("INSERT INTO railway.users(email, password) VALUES(?, ?)", [email, hasedPassowrd], (err, result) => {
 
             if (err) return res.status(500).json({error: "Error: try again", detials: err});
 
@@ -101,7 +101,7 @@ exports.updateUser = function (req, res) {
 
     if (username.length < 3) return res.status(400).json({error: "The username must be at least 3 characters"});
 
-    db.query("SELECT * FROM cholera.users WHERE id = ?", id, async (err, result) => {
+    db.query("SELECT * FROM railway.users WHERE id = ?", id, async (err, result) => {
 
         if (err) return res.status(500).json({error: "Something went wrong: ", detials: err});
 
@@ -111,7 +111,7 @@ exports.updateUser = function (req, res) {
         const newUsername = username;
         const newPassword = await bcrypt.hash(password, 10);
         
-        db.query("UPDATE cholera.users SET username = ?, password = ? WHERE id = ?", [newUsername, newPassword, id], (err, result) => {
+        db.query("UPDATE railway.users SET username = ?, password = ? WHERE id = ?", [newUsername, newPassword, id], (err, result) => {
 
             if (err) return res.status(500).json({error: "Error: try again", detials: err});
 
@@ -124,12 +124,12 @@ exports.updateUser = function (req, res) {
 exports.deleteUser = function (req, res) {
     const id = req.params.id;
 
-    db.query("SELECT id FROM cholera.users WHERE id = ?", id, (err, result) => {
+    db.query("SELECT id FROM railway.users WHERE id = ?", id, (err, result) => {
         if (err) return res.status(500).json({error: "Something went wrong", detials: err});
 
         if (result.length > 0) {
 
-            db.query("DELETE FROM cholera.users WHERE id = ?", id, (err, result) => {
+            db.query("DELETE FROM railway.users WHERE id = ?", id, (err, result) => {
 
                 if (err) return res.status(500).json({error: "Something went wrong", detials: err});
 

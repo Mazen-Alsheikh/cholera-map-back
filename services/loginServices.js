@@ -7,7 +7,7 @@ const loginServices = function (req, res) {
 
     if (email && password) {
 
-        const query = "SELECT * FROM cholera.users WHERE email = ?";
+        const query = "SELECT * FROM railway.users WHERE email = ?";
 
         db.query(query, email, async (err, result) => {
 

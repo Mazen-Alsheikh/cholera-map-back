@@ -2,7 +2,7 @@ const db = require("../connect");
 
 exports.getStates = (req, res) => {
   
-  db.query("SELECT * FROM cholera.stats", (error, result) => {
+  db.query("SELECT * FROM railway.stats", (error, result) => {
     if (error) return res.status(500).json(error.message);
     if (result.length === 0) return res.status(404).json({message: "لاتوجد بيانات"});
     res.status(200).json({message: "تم جلب البيانات بنجاح", data: result});
@@ -21,12 +21,12 @@ exports.updateState = (req, res) => {
 
   console.log(state, cases, deaths, recovered, totalCases, totalDeaths, totalRecovered);
 
-  db.query("SELECT * FROM cholera.stats WHERE state = ?", [state], (error, result) => {
+  db.query("SELECT * FROM railway.stats WHERE state = ?", [state], (error, result) => {
     if (error) return res.status(500).json({ error: error, message: "خطأ في قاعدة البيانات" });
     if (result.length === 0) return res.status(404).json({ message: "الولاية غير موجودة، لم يتم تحديث البيانات" });
 
     db.query(
-      "UPDATE cholera.stats SET cases = ?, recovered = ?, deaths = ?, total_cases = ?, total_deaths = ?, total_recovered = ? WHERE state = ?",
+      "UPDATE railway.stats SET cases = ?, recovered = ?, deaths = ?, total_cases = ?, total_deaths = ?, total_recovered = ? WHERE state = ?",
       [cases, recovered, deaths, totalCases, totalDeaths, totalRecovered, state],
       (error, result) => {
         if (error) return res.status(500).json({ error: error, message: "خطأ في قاعدة البيانات" });

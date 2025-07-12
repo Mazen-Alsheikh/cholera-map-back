@@ -6,7 +6,7 @@ const registerServices = function (req, res) {
 
     if (email && password) {
 
-        const query = "SELECT * FROM cholera.users WHERE email = ?";
+        const query = "SELECT * FROM railway.users WHERE email = ?";
 
         db.query(query, email, async (err, result) => {
 
@@ -22,7 +22,7 @@ const registerServices = function (req, res) {
 
                     const hashedPassword = await bcrypt.hash(password, 10);
 
-                    const newUser = "INSERT INTO cholera.users(email, password) VALUES(?, ?)";
+                    const newUser = "INSERT INTO railway.users(email, password) VALUES(?, ?)";
 
                     db.query(newUser, [email, hashedPassword], (err, result) => {
 
