@@ -30,7 +30,7 @@ app.get("/api/stats", getStats);
 app.get("/api/states", getStates);
 app.post("/api/states/update", statsServices.updateState);
 
-const port = process.env.SERVER_PORT;
+const port = process.env.PORT;
 
 app.listen(port, ()=> {
     console.log(`Server is running in the port ${port}`);
